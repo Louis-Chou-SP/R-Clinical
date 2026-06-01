@@ -1,0 +1,32 @@
+{
+    "id": "36EEF02D",
+    "path": "~/Documents/github/r-clinical-learning/W0_environment_setup.qmd",
+    "project_path": "W0_environment_setup.qmd",
+    "type": "quarto_markdown",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1780324509220.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "rmdVisualMode": "true",
+        "rmdVisualWrapConfigured": "true",
+        "tempName": "Untitled1",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "42,0",
+        "scrollLine": "0",
+        "docOutlineVisible": "1",
+        "rmdVisualCollapsedChunks": "",
+        "rmdVisualModeLocation": "902:852"
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1780324684,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1780324684523,
+    "read_only": false,
+    "read_only_alternatives": []
+}
