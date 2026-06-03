@@ -1,0 +1,12 @@
+X <- iris %>% mutate(YY = Sepal.Width * 5.2)
+head(X %>% select(Sepal.Width, YY))
+summarise(
+  age_mean   = mean(AGE),
+  age_sd     = sd(AGE),
+  wt_mean    = mean(WT),
+  wt_sd      = sd(WT),
+  n          = n()
+)
+#check the color
+rm(list = ls())
+
