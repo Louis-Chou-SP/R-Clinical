@@ -1,0 +1,81 @@
+---
+title: "W3 - Join Operations"
+author: "Louis Chou"
+date: "2026-06-06"
+format: html
+---
+
+## Setup
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+```
+
+## Dataset
+
+```{r}
+# Subject-level data (like DM)
+dm <- data.frame(
+  USUBJID = c("001", "002", "003", "004"),
+  AGE     = c(25, 34, 45, 28),
+  SEX     = c("M", "F", "M", "F"),
+  TRT     = c("Drug A", "Drug A", "Placebo", "Placebo")
+)
+
+# Adverse Event data (like AE)
+ae <- data.frame(
+  USUBJID = c("001", "001", "002", "003", "005"),
+  AETERM  = c("Headache", "Nausea", "Fatigue", "Headache", "Rash"),
+  AESEV   = c("MILD", "MODERATE", "MILD", "SEVERE", "MILD")
+)
+
+dm
+ae
+```
+
+## Exercise 1: left_join
+
+```{r}
+ae_dm1 <- dm %>%
+  left_join(ae, by = "USUBJID")
+
+ae_dm1
+
+# Verify row count and check subject 004
+nrow(ae_dm1)
+ae_dm1 %>% filter(USUBJID == "004")
+```
+
+## Exercise 2: inner_join
+
+```{r}
+ae_dm2 <- dm %>%
+  inner_join(ae, by = "USUBJID")
+
+ae_dm2
+
+nrow(ae_dm2)
+```
+
+## Exercise 3: full_join
+
+```{r}
+ae_dm3 <- dm %>%
+  full_join(ae, by = "USUBJID")
+
+ae_dm3
+
+# Verify 005 has NA for dm columns
+ae_dm3 %>% filter(USUBJID == "005")
+```
+
+## Exercise 4: anti_join
+
+```{r}
+ae_dm4 <- dm %>%
+  anti_join(ae, by = "USUBJID")
+
+ae_dm4
+```
