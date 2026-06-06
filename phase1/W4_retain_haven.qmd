@@ -1,0 +1,126 @@
+---
+title: "W4 - RETAIN Equivalents, haven, and CDISC Pilot Data"
+author: "Louis Chou"
+date: "2026-06-07"
+format: html
+---
+
+## Setup
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+library(haven)
+```
+
+## Part 1: RETAIN Equivalents
+
+### Dataset
+
+```{r}
+adlb_sim <- data.frame(
+  USUBJID = c("001", "001", "001", "002", "002"),
+  PARAM   = c("ALT", "ALT", "ALT", "ALT", "ALT"),
+  AVISIT  = c("Baseline", "Week 4", "Week 8",
+              "Baseline", "Week 4"),
+  AVAL    = c(25, 30, 28, 40, 35)
+)
+```
+
+### Exercise 1: BASE and CHG Derivation
+
+```{r}
+adlb1 <- adlb_sim %>%
+  group_by(USUBJID, PARAM) %>%
+  mutate(
+    BASE = first(AVAL),
+    CHG  = AVAL - BASE
+  ) %>%
+  ungroup()
+
+adlb1
+```
+
+## Part 2: Read CDISC Pilot Data with haven
+
+### Read XPT Files
+
+```{r}
+# Read DM domain
+dm_pilot <- read_xpt(
+  "/Users/flower1122/Documents/cdisc_pilot/sdtm-adam-pilot-project-master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/tabulations/sdtm/dm.xpt"
+)
+
+# Read AE domain
+ae_pilot <- read_xpt(
+  "/Users/flower1122/Documents/cdisc_pilot/sdtm-adam-pilot-project-master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/tabulations/sdtm/ae.xpt"
+)
+
+# Check dimensions
+nrow(dm_pilot)
+nrow(ae_pilot)
+```
+
+### Inspect Variable Types
+
+```{r}
+# glimpse shows variable types clearly
+glimpse(ae_pilot)
+```
+
+## Part 3: Real Data Exercises
+
+### Exercise 3-1: DM Group Summary
+
+```{r}
+result1 <- dm_pilot %>%
+  group_by(ARM) %>%
+  summarise(
+    n        = n(),
+    mean_age = mean(AGE),
+    sd_age   = sd(AGE)
+  )
+
+result1
+```
+
+### Exercise 3-2: Filter SEVERE AEs
+
+```{r}
+result2 <- ae_pilot %>%
+  filter(AESEV == "SEVERE") %>%
+  arrange(USUBJID) %>%
+  select(USUBJID, AETERM, AESEV, AESTDTC)
+
+result2
+nrow(result2)
+```
+
+### Exercise 3-3: DM + AE Join
+
+```{r}
+result3 <- ae_pilot %>%
+  left_join(
+    dm_pilot %>% select(USUBJID, ARM),
+    by = "USUBJID"
+  ) %>%
+  group_by(ARM) %>%
+  summarise(n = n())
+
+result3
+```
+
+### Exercise 3-4: AE-free Subjects
+
+```{r}
+result4_ <- dm_pilot %>%
+  anti_join(ae_pilot %>% select(USUBJID), by = "USUBJID")
+
+ae_free_n   <- nrow(result4_)
+total_n     <- nrow(dm_pilot)
+ae_free_pct <- ae_free_n / total_n * 100
+
+cat("AE-free subjects:", ae_free_n, "/", total_n,
+    "(", round(ae_free_pct, 1), "%)")
+```

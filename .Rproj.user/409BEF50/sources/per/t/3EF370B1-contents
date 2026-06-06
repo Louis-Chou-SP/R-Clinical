@@ -83,3 +83,69 @@ ae_dm3
 ae_dm4 <- dm %>%
   anti_join(ae, by = "USUBJID")
 ae_dm4
+
+adlb_sim <- data.frame(
+  USUBJID = c("001", "001", "001", "002", "002"),
+  PARAM   = c("ALT", "ALT", "ALT", "ALT", "ALT"),
+  AVISIT  = c("Baseline", "Week 4", "Week 8",
+              "Baseline", "Week 4"),
+  AVAL    = c(25, 30, 28, 40, 35)
+)
+
+adlb1 <- adlb_sim %>%
+  group_by(USUBJID, PARAM) %>%
+  mutate(
+    BASE = first(AVAL),
+    CHG = AVAL - BASE
+  )%>%
+  ungroup()
+adlb1
+
+adlb2 <- adlb_sim %>%
+  group_by(USUBJID) %>%
+  summarise(
+    MEAN = mean(AVAL)
+  )%>%
+  ungroup()
+adlb2
+
+# 3-1
+result1 <- dm_pilot %>%
+  group_by(ARM) %>%
+  summarise(
+    n = n(),
+    mean_age = mean(AGE),
+    sd_age = sd(AGE)
+  )
+  #select(ARM, n, mean_age, sd_age)
+result1
+
+# 3-2
+result2 <- ae_pilot %>%
+  filter(AESEV == "SEVERE") %>%
+  arrange(USUBJID) %>%
+  select(USUBJID, AETERM, AESEV, AESTDTC)
+
+result2
+
+#3-3
+result3 <- ae_pilot %>%
+  left_join(
+    dm_pilot %>% select(USUBJID, ARM),
+    by = "USUBJID"
+  ) %>%
+  group_by(ARM) %>%
+  summarise(n = n()) %>%
+  select(ARM, n)
+result3
+
+#3-4
+result4_ <- dm_pilot %>%
+  anti_join(ae_pilot %>% select(USUBJID), by = "USUBJID")
+
+ae_free_n   <- nrow(result4_)
+total_n     <- nrow(dm_pilot)
+ae_free_pct <- ae_free_n / total_n * 100
+
+cat("AE-free subjects:", ae_free_n, "/", total_n,
+    "(", round(ae_free_pct, 1), "%)")
