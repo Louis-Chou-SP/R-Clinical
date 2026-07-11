@@ -3,7 +3,11 @@
         {
             "columnIndex": 2,
             "ascending": true
+        },
+        {
+            "columnIndex": 1,
+            "ascending": false
         }
     ],
-    "path": "~/Documents/github/r-clinical-learning"
+    "path": "~/Documents/github/R-Clinical"
 }

@@ -24,11 +24,14 @@ to clinical trial programming (SDTM, ADaM, TLF).
 | Phase 4 | TLF with R | ⏳ Upcoming |
 | Phase 5 | Integration & Submission | ⏳ Upcoming |
 
-## Phase 1 - R Clinical Basics
-- W1: tidyverse core operations (filter, mutate, select, arrange, group_by)
-- W2: SAS DATA step to R (case_when, stringr, lubridate)
-- W3: Join operations (left_join, inner_join, full_join, anti_join)
-- W4: RETAIN equivalents + haven + CDISC Pilot data
+## Phase 1 - R Clinical Basics ✅
+
+| Week | Topic | Notes |
+|------|-------|-------|
+| W1 | tidyverse core operations | [View](https://louis-chou-sp.github.io/R-Clinical/phase1/W1_tidyverse_basics.html) |
+| W2 | SAS DATA step to R | [View](https://louis-chou-sp.github.io/R-Clinical/phase1/W2_sas_to_r.html) |
+| W3 | Join operations | [View](https://louis-chou-sp.github.io/R-Clinical/phase1/W3_join.html) |
+| W4 | RETAIN equivalents + haven + CDISC Pilot | [View](https://louis-chou-sp.github.io/R-Clinical/phase1/W4_retain_haven.html) |
 
 ## Phase 2 - SDTM with R
 - W5: sdtm.oak framework concepts
