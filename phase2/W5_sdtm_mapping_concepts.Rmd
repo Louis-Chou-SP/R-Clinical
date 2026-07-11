@@ -1,0 +1,59 @@
+---
+title: "W5 - SDTM Mapping Concepts"
+author: "Louis Chou"
+date: "2026-07-11"
+format: html
+---
+
+## Setup
+
+```{r}
+#| message: false
+#| warning: false
+library(tidyverse)
+```
+
+## Raw Data
+
+```{r}
+# Simulated raw demographic data
+raw_demo <- data.frame(
+  STUDYID  = rep("CDISCPILOT01", 5),
+  SUBJID   = c("1001", "1002", "1003", "1004", "1005"),
+  BRTHDT   = c("1950-03-12", "1945-07-22", "1960-01-30",
+               "1938-11-05", "1955-09-18"),
+  SEX_RAW  = c("Male", "Female", "Male", "Female", "Male"),
+  RACE_RAW = c("White", "Black", "Asian", "White", "Other"),
+  SITEID   = c("701", "701", "702", "702", "703")
+)
+
+raw_demo
+```
+
+## Mini-DM Mapping
+
+```{r}
+# SDTM mapping logic: condition -> assign
+# 1. USUBJID = STUDYID-SITEID-SUBJID
+# 2. SEX: CT mapping (Male -> M, Female -> F, other -> U)
+# 3. BRTHDTC: validate ISO 8601 format, flag INVALID if not
+# 4. Assemble mini-DM with required variables only
+final1 <- raw_demo %>%
+  mutate(
+    USUBJID = str_c(STUDYID, SITEID, SUBJID, sep = "-"),
+    DOMAIN  = "DM",
+    SEX = case_when(
+      SEX_RAW == "Male"   ~ "M",
+      SEX_RAW == "Female" ~ "F",
+      TRUE                ~ "U"
+    ),
+    BRTHDTC = case_when(
+      str_detect(BRTHDT, "\\d{4}-\\d{2}-\\d{2}") ~ BRTHDT,
+      TRUE                                        ~ "INVALID"
+    )
+  ) %>%
+  arrange(USUBJID) %>%
+  select(STUDYID, DOMAIN, USUBJID, SUBJID, SEX, BRTHDTC)
+
+final1
+```
