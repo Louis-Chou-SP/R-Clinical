@@ -1,4 +1,10 @@
-.Rproj.user
+# Mac system files
+.DS_Store
+
+# R history
 .Rhistory
 .RData
 .Ruserdata
+
+# RStudio files
+.Rproj.user/
