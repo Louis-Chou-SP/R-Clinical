@@ -1,12 +1,16 @@
+# Louis Chou | Clinical Statistical Programmer
+
+📍 Taiwan｜6+ years statistical programming (SDTM · ADaM · TLF)  
+🔬 Rare disease trials · FDA / EMA submissions  
+📚 Currently expanding into R / pharmaverse ecosystem  
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Louis%20Chou-0077B5?style=flat&logo=linkedin)](https://www.linkedin.com/in/louis-chou-statisticalprogrammer/)
+[![GitHub](https://img.shields.io/badge/GitHub-Louis--Chou--SP-181717?style=flat&logo=github)](https://github.com/Louis-Chou-SP)
+
 # R in Clinical Trials - Learning Journey
 
 A self-directed learning portfolio documenting my journey of applying R 
 to clinical trial programming (SDTM, ADaM, TLF).
-
-## Background
-- 6+ years of SAS clinical programming experience (SDTM, ADaM, TLF)
-- Expanding into R / pharmaverse ecosystem
-- Focus: FDA-compliant submission workflows
 
 ## Tools & Packages
 ![R](https://img.shields.io/badge/R-4.6.0-276DC3?style=flat&logo=r)
